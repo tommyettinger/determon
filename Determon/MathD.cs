@@ -25,6 +25,21 @@ namespace Determon
         /// </summary>
         public const decimal Pi2 = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 2M;
         /// <summary>
+        /// The irrational number pi times 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        /// <remarks>
+        /// This is an alias for <see cref="Pi2">Pi2</see>.
+        /// </remarks>
+        public const decimal Tau = Pi2;
+        /// <summary>
+        /// The constant multiplier that converts from a measurement in radians to a measurement in degrees, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        public const decimal RadianToDegree = 180M / 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M;
+        /// <summary>
+        /// The constant multiplier that converts from a measurement in degrees to a measurement in radians, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        public const decimal DegreeToRadian = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M / 180M;
+        /// <summary>
         /// The irrational number e, Euler's totient, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal E = 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746M;

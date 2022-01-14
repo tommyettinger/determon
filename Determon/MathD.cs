@@ -12,6 +12,14 @@ namespace Determon
         /// </summary>
         public const decimal PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M;
         /// <summary>
+        /// The irrational number pi divided by 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        public const decimal HALF_PI = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 0.5M;
+        /// <summary>
+        /// The irrational number pi times 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        public const decimal PI2 = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 2M;
+        /// <summary>
         /// The irrational number e, Euler's totient, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal E = 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746M;
@@ -49,5 +57,17 @@ namespace Determon
             else
                 return Sqrt(d, average);
         }
+
+        /// <summary>
+        /// Like the modulo operator %, but the result will always match the sign of d instead of op.
+        /// </summary>
+        /// <param name="op">The dividend; negative values are permitted and wrap instead of producing negative results.</param>
+        /// <param name="d">The divisor; if this is negative then the result will be negative, otherwise it will be positive.</param>
+        /// <returns>The remainder of the division of op by d, with a sign matching d.</returns>
+        public static decimal Remainder(decimal op, decimal d)
+        {
+            return (op % d + d) % d;
+        }
+
     }
 }

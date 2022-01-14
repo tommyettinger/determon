@@ -3,8 +3,8 @@ using BenchmarkDotNet.Running;
 
 namespace Determon.PerformanceTests
 {
-    public class RandomULongBoundedComparison
-    {
+//    public class RandomULongBoundedComparison
+//    {
 //
 //        private readonly DistinctRandom _distinctRandom = new DistinctRandom(1UL);
 //        private readonly LaserRandom _laserRandom = new LaserRandom(1UL);

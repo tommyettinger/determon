@@ -17,6 +17,10 @@ namespace Determon
         public const decimal E = 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746M;
 
         /// <summary>
+        /// 
+        /// </summary>
+        public const decimal PHI = 1.61803398874989484820458683436563811772030917980576286213544862270526046281890244970720720418939113748475M;
+        /// <summary>
         /// A square root method for decimals.
         /// </summary>
         /// <param name="d">The square to find the square root of.</param>

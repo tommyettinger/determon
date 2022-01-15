@@ -17,15 +17,15 @@ namespace Determon
         /// </summary>
         public const decimal Pi = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M;
         /// <summary>
-        /// The irrational number pi divided by 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// The irrational number pi divided by 2M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal HalfPi = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 0.5M;
         /// <summary>
-        /// The irrational number pi times 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// The irrational number pi times 2M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal Pi2 = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 2M;
         /// <summary>
-        /// The irrational number pi times 2, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// The irrational number pi times 2M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         /// <remarks>
         /// This is an alias for <see cref="Pi2">Pi2</see>.
@@ -70,12 +70,12 @@ namespace Determon
         public const decimal Epsilon = 0.0000000000000000001M;
 
         /// <summary>
-        /// The irrational number pi divided by 4, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// The irrational number pi divided by 4M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal QuarterPi = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M * 0.25M;
 
         /// <summary>
-        /// 1.0 divided by e (Euler's totient), to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// 1.0M divided by e (Euler's totient), to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         private const decimal InverseE = 1M / E;
 
@@ -87,17 +87,22 @@ namespace Determon
         /// <summary>
         /// Represents 0.0M .
         /// </summary>
-        public const decimal Zero = 0.0M;
+        private const decimal Zero = 0.0M;
 
         /// <summary>
         /// Represents 1.0M .
         /// </summary>
-        public const decimal One = 1.0M;
+        private const decimal One = 1.0M;
 
         /// <summary>
         /// Represents 0.5M .
         /// </summary>
         private const decimal Half = 0.5M;
+
+        /// <summary>
+        /// 1.0M divided by 3.0M. Exactly what it says.
+        /// </summary>
+        private const decimal Third = 1M / 3M;
 
         /// <summary>
         /// Max iteration count in Taylor series.
@@ -412,6 +417,18 @@ namespace Determon
                 return average;
             else
                 return Sqrt(d, average);
+        }
+        /// <summary>
+        /// Gets the cube root of the given decimal, correctly returning negative results when negative inputs are given.
+        /// </summary>
+        /// <remarks>
+        /// This uses <see cref="Pow(decimal, decimal)">Pow()</see> with an exponent of one third, and changes the sign for negative inputs before and after calling Pow().
+        /// </remarks>
+        /// <param name="d">The cube to find the cube root of.</param>
+        /// <returns>The exact cube root of d, as well as a decimal can represent it.</returns>
+        public static decimal Cbrt(decimal d)
+        {
+            return d < Zero ? -Pow(-d, Third) : Pow(d, Third);
         }
 
         /// <summary>

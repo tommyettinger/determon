@@ -40,6 +40,22 @@ namespace Determon
         /// </summary>
         public const decimal DegreeToRadian = 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M / 180M;
         /// <summary>
+        /// The constant multiplier that converts from a measurement in radians to a measurement in turns, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        /// <remarks>
+        /// Using turns as a measurement of angles, where 1 turn equals 2 * Pi radians, can help with some calculations. It works well if you subtract <see cref="decimal.Truncate(decimal)"/> when you
+        /// want a measurement between 0 and 1 turn.
+        /// </remarks>
+        public const decimal RadianToTurn = 0.5M / 3.14159265358979323846264338327950288419716939937510582097494459230781640628620899862803482534211706798214M;
+        /// <summary>
+        /// The constant multiplier that converts from a measurement in turns to a measurement in radians, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
+        /// </summary>
+        /// <remarks>
+        /// Using turns as a measurement of angles, where 1 turn equals 2 * Pi radians, can help with some calculations. It works well if you subtract <see cref="decimal.Truncate(decimal)"/> when you
+        /// want a measurement between 0 and 1 turn.
+        /// </remarks>
+        public const decimal TurnToRadian = Pi2;
+        /// <summary>
         /// The irrational number e, Euler's totient, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
         /// </summary>
         public const decimal E = 2.71828182845904523536028747135266249775724709369995957496696762772407663035354759457138217852516642742746M;
@@ -548,7 +564,38 @@ namespace Determon
             {
                 return -HalfPi;
             }
-            if(x == Zero && y == Zero)
+            if (x == Zero && y == Zero)
+            {
+                return Zero;
+            }
+            throw new ArgumentException("Invalid atan2() arguments, potentially including NaN.");
+        }
+        /// <summary>
+        /// Analog to Math.Atan2(), but will return values in the Pi to Pi * 2 range instead of returning negative results for negative y.
+        /// Returns 0.0M if both arguments are zero.
+        /// </summary>
+        /// <param name="y">The y-coordinate of what is typically a 2D point. Note the order of parameters.</param>
+        /// <param name="x">The x-coordinate of what is typically a 2D point.</param>
+        /// <returns>An angle in radians between 0 and Pi2.</returns>
+        public static decimal Atan2NonNegative(decimal y, decimal x)
+        {
+            if (x > Zero)
+            {
+                return Atan(y / x) + (y >= Zero ? Zero : Pi2);
+            }
+            if (x < Zero)
+            {
+                return Atan(y / x) + Pi;
+            }
+            if (x == Zero && y > Zero)
+            {
+                return HalfPi;
+            }
+            if (x == Zero && y < Zero)
+            {
+                return Pi + HalfPi;
+            }
+            if (x == Zero && y == Zero)
             {
                 return Zero;
             }

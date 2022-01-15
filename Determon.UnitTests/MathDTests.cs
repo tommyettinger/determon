@@ -43,6 +43,18 @@ namespace Determon.UnitTests
             }
         }
         [Fact]
+        public void FactCbrt()
+        {
+            for (int i = 0; i < TestCount; i++)
+            {
+                double d = _random.NextDouble() * 65536.0;
+                decimal d1 = (decimal)d;
+                d = Math.Cbrt(d);
+                d1 = MathD.Cbrt(d1);
+                Assert.True(MathD.Abs((decimal)d - d1) < Epsilon);
+            }
+        }
+        [Fact]
         public void FactLog()
         {
             for (int i = 0; i < TestCount; i++)

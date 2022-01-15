@@ -21,7 +21,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() * 4.0;
                 decimal d1 = (decimal)d;
                 d = Math.Exp(d);
                 d1 = MathD.Exp(d1);
@@ -35,7 +35,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
                 d = Math.Asin(d);
                 d1 = MathD.Asin(d1);
@@ -47,7 +47,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
                 d = Math.Acos(d);
                 d1 = MathD.Acos(d1);
@@ -59,7 +59,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
                 d = Math.Atan(d);
                 d1 = MathD.Atan(d1);
@@ -71,7 +71,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
                 d = Math.Sin(d);
                 d1 = MathD.Sin(d1);
@@ -83,7 +83,7 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double d = Random.NextDouble();
+                double d = Random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
                 d = Math.Cos(d);
                 d1 = MathD.Cos(d1);
@@ -95,8 +95,8 @@ namespace Determon.UnitTests
         {
             for (int i = 0; i < testCount; i++)
             {
-                double x = Random.NextDouble();
-                double y = Random.NextDouble();
+                double x = Random.NextDouble() - 0.5;
+                double y = Random.NextDouble() - 0.5;
                 decimal dx = (decimal)x;
                 decimal dy = (decimal)y;
                 var d = Math.Atan2(y, x);

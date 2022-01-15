@@ -91,6 +91,18 @@ namespace Determon.UnitTests
             }
         }
         [Fact]
+        public void FactTan()
+        {
+            for (int i = 0; i < testCount; i++)
+            {
+                double d = Random.NextDouble() - 0.5;
+                decimal d1 = (decimal)d;
+                d = Math.Tan(d);
+                d1 = MathD.Tan(d1);
+                Assert.True(MathD.Abs((decimal)d - d1) < epsilon);
+            }
+        }
+        [Fact]
         public void FactAtan2()
         {
             for (int i = 0; i < testCount; i++)
@@ -101,6 +113,21 @@ namespace Determon.UnitTests
                 decimal dy = (decimal)y;
                 var d = Math.Atan2(y, x);
                 var z = MathD.Atan2(dy, dx);
+                Assert.True(MathD.Abs((decimal)d - z) < epsilon);
+            }
+        }
+        [Fact]
+        public void FactAtan2NonNegative()
+        {
+            for (int i = 0; i < testCount; i++)
+            {
+                double x = Random.NextDouble() - 0.5;
+                double y = Random.NextDouble() - 0.5;
+                decimal dx = (decimal)x;
+                decimal dy = (decimal)y;
+                var d = Math.Atan2(y, x);
+                if (d < 0.0) d += Math.PI + Math.PI;
+                var z = MathD.Atan2NonNegative(dy, dx);
                 Assert.True(MathD.Abs((decimal)d - z) < epsilon);
             }
         }

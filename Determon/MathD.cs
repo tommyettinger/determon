@@ -345,7 +345,7 @@ namespace Determon
         /// <returns></returns>
         private static decimal CalculateSinFromCos(decimal x, decimal cos)
         {
-            var moduleOfSin = Sqrt(One - (cos * cos));
+            var moduleOfSin = Sqrt(One - (cos * cos), Half);
             if (IsSignOfSinePositive(x)) return moduleOfSin;
             return -moduleOfSin;
         }
@@ -356,8 +356,7 @@ namespace Determon
         /// <returns></returns>
         public static decimal Sin(decimal x)
         {
-            var cos = Cos(x);
-            return CalculateSinFromCos(x, cos);
+            return Cos(x - HalfPi);
         }
 
 

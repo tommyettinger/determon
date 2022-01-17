@@ -17,6 +17,7 @@
   <ItemGroup>
     <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.2.0" />
+    <PackageReference Include="ShaiRandom" Version="0.0.1-alpha02" />
   </ItemGroup>
 
   <ItemGroup>

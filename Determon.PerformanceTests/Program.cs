@@ -92,6 +92,30 @@ namespace Determon.PerformanceTests
         [Benchmark]
         public double SqrtF() => MathF.Sqrt(_random.NextFloat());
     }
+    ///<summary>
+    ///</summary>
+    ///<remarks>
+    ///</remarks>
+    public class PowComparison
+    {
+        private readonly MizuchiRandom _random = new MizuchiRandom(1UL);
+
+        [Benchmark]
+        public decimal BaselineM() => _random.NextDecimal();
+
+        [Benchmark]
+        public decimal PowM() => MathD.Pow(_random.NextDecimal(), 0.5M + _random.NextDecimal());
+
+        [Benchmark]
+        public double BaselineD() => _random.NextDouble();
+        [Benchmark]
+        public double PowD() => Math.Pow(_random.NextDouble(), 0.5 + _random.NextDouble());
+
+        [Benchmark]
+        public double BaselineF() => _random.NextFloat();
+        [Benchmark]
+        public double PowF() => MathF.Pow(_random.NextFloat(), 0.5f + _random.NextFloat());
+    }
 
     internal static class Program
     {

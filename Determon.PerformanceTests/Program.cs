@@ -127,8 +127,18 @@ namespace Determon.PerformanceTests
     }
 
     ///<summary>
+    ///|            Method |         Mean |       Error |      StdDev |       Median |
+    ///|------------------ |-------------:|------------:|------------:|-------------:|
+    ///|         BaselineM |     5.134 ns |   0.1257 ns |   0.1762 ns |     5.136 ns |
+    ///|            Atan2M | 6,639.725 ns | 130.5516 ns | 218.1223 ns | 6,680.252 ns |
+    ///| Atan2NonNegativeM | 6,688.209 ns | 130.1905 ns | 224.5723 ns | 6,704.941 ns |
+    ///|         BaselineD |     2.372 ns |   0.0742 ns |   0.1111 ns |     2.363 ns |
+    ///|            Atan2D |    34.196 ns |   0.7108 ns |   1.2070 ns |    34.740 ns |
+    ///|         BaselineF |     3.356 ns |   0.0954 ns |   0.1305 ns |     3.384 ns |
+    ///|            Atan2F |    30.018 ns |   0.6190 ns |   0.8677 ns |    30.380 ns |
     ///</summary>
     ///<remarks>
+    ///Again, about a 200x difference. Ouch.
     ///</remarks>
     public class Atan2Comparison
     {

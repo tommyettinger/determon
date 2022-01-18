@@ -45,7 +45,7 @@ namespace Determon.PerformanceTests
         [Benchmark]
         public double CosD() => Math.Cos(_random.NextDouble() * Math.PI * 2.0 - Math.PI);
         [Benchmark]
-        public double TanD() => Math.Tan((_random.NextDouble()- 0.5) * Math.PI * 0.999);
+        public double TanD() => Math.Tan((_random.NextDouble() - 0.5) * Math.PI * 0.999);
 
         [Benchmark]
         public double BaselineF() => (_random.NextFloat() * MathF.PI * 2f - MathF.PI);
@@ -55,6 +55,32 @@ namespace Determon.PerformanceTests
         public double CosF() => MathF.Cos(_random.NextFloat() * MathF.PI * 2f - MathF.PI);
         [Benchmark]
         public double TanF() => MathF.Tan((_random.NextFloat() - 0.5f) * MathF.PI * 0.999f);
+    }
+    ///<summary>
+    ///</summary>
+    ///<remarks>
+    ///</remarks>
+    public class SqrtComparison
+    {
+        private readonly MizuchiRandom _random = new MizuchiRandom(1UL);
+
+        [Benchmark]
+        public decimal BaselineM() => _random.NextDecimal();
+
+        [Benchmark]
+        public decimal SqrtM() => MathD.Sqrt(_random.NextDecimal());
+        [Benchmark]
+        public decimal SqrtEstimateM() => MathD.Sqrt(_random.NextDecimal(), 0.7M);
+
+        [Benchmark]
+        public double BaselineD() => _random.NextDouble();
+        [Benchmark]
+        public double SqrtD() => Math.Sqrt(_random.NextDouble());
+
+        [Benchmark]
+        public double BaselineF() => _random.NextFloat();
+        [Benchmark]
+        public double SqrtF() => MathF.Sqrt(_random.NextFloat());
     }
 
     internal static class Program

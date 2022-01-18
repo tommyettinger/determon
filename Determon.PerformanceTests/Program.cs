@@ -93,8 +93,17 @@ namespace Determon.PerformanceTests
         public double SqrtF() => MathF.Sqrt(_random.NextFloat());
     }
     ///<summary>
+    ///|    Method |         Mean |       Error |      StdDev |
+    ///|---------- |-------------:|------------:|------------:|
+    ///| BaselineM |     4.826 ns |   0.0962 ns |   0.0900 ns |
+    ///|      PowM | 7,610.649 ns | 148.9028 ns | 146.2425 ns |
+    ///| BaselineD |     2.286 ns |   0.0753 ns |   0.1258 ns |
+    ///|      PowD |    32.525 ns |   0.4157 ns |   0.3246 ns |
+    ///| BaselineF |     3.410 ns |   0.0954 ns |   0.1645 ns |
+    ///|      PowF |    25.626 ns |   0.3908 ns |   0.3655 ns |
     ///</summary>
     ///<remarks>
+    ///A 200x to 300x difference, ouch....
     ///</remarks>
     public class PowComparison
     {

@@ -126,6 +126,34 @@ namespace Determon.PerformanceTests
         public double PowF() => MathF.Pow(_random.NextFloat(), 0.5f + _random.NextFloat());
     }
 
+    ///<summary>
+    ///</summary>
+    ///<remarks>
+    ///</remarks>
+    public class Atan2Comparison
+    {
+        private readonly MizuchiRandom _random = new MizuchiRandom(1UL);
+
+        [Benchmark]
+        public decimal BaselineM() => _random.NextDecimal();
+
+        [Benchmark]
+        public decimal Atan2M() => MathD.Atan2(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+
+        [Benchmark]
+        public decimal Atan2NonNegativeM() => MathD.Atan2NonNegative(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+
+        [Benchmark]
+        public double BaselineD() => _random.NextDouble();
+        [Benchmark]
+        public double Atan2D() => Math.Atan2(_random.NextDouble() - 0.5, _random.NextDouble() - 0.5);
+
+        [Benchmark]
+        public double BaselineF() => _random.NextFloat();
+        [Benchmark]
+        public double Atan2F() => MathF.Atan2(_random.NextFloat() - 0.5f, _random.NextFloat() - 0.5f);
+    }
+
     internal static class Program
     {
         private static void Main(string[] args)

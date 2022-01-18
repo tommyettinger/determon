@@ -57,8 +57,18 @@ namespace Determon.PerformanceTests
         public double TanF() => MathF.Tan((_random.NextFloat() - 0.5f) * MathF.PI * 0.999f);
     }
     ///<summary>
+    ///|        Method |         Mean |      Error |     StdDev |       Median |
+    ///|-------------- |-------------:|-----------:|-----------:|-------------:|
+    ///|     BaselineM |     5.734 ns |  0.0964 ns |  0.0902 ns |     5.785 ns |
+    ///|         SqrtM | 1,355.962 ns | 22.5503 ns | 21.0936 ns | 1,348.748 ns |
+    ///| SqrtEstimateM | 1,050.689 ns | 12.8492 ns | 12.0191 ns | 1,044.573 ns |
+    ///|     BaselineD |     2.392 ns |  0.0767 ns |  0.0821 ns |     2.433 ns |
+    ///|         SqrtD |     3.662 ns |  0.1011 ns |  0.1417 ns |     3.737 ns |
+    ///|     BaselineF |     3.456 ns |  0.0964 ns |  0.1688 ns |     3.532 ns |
+    ///|         SqrtF |     3.891 ns |  0.0851 ns |  0.0711 ns |     3.923 ns |
     ///</summary>
     ///<remarks>
+    ///OK, 2 orders of magnitude slower to do decimal square roots, and then some...
     ///</remarks>
     public class SqrtComparison
     {

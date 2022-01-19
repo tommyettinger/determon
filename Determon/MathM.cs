@@ -10,7 +10,7 @@ namespace Determon
     /// The Sqrt() methods are from a Stack Overflow answer by Bobson. The Remainder() method is common knowledge, but the specific code came from SquidLib, and
     /// likely traces back further to the Uncommon Math Library. Some minor cleanup was done by Tommy Ettinger, such as correcting inconsistent method naming.
     /// </remarks>
-    public class MathD
+    public static class MathM
     {
         /// <summary>
         /// The irrational number pi, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
@@ -87,12 +87,12 @@ namespace Determon
         /// <summary>
         /// Represents 0.0M .
         /// </summary>
-        private const decimal Zero = 0.0M;
+        private const decimal Zero = decimal.Zero;
 
         /// <summary>
         /// Represents 1.0M .
         /// </summary>
-        private const decimal One = 1.0M;
+        private const decimal One = decimal.One;
 
         /// <summary>
         /// Represents 0.5M .

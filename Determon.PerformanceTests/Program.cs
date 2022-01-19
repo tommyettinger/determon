@@ -29,14 +29,14 @@ namespace Determon.PerformanceTests
         private readonly MizuchiRandom _random = new MizuchiRandom(1UL);
 
         [Benchmark]
-        public decimal BaselineM() => (_random.NextDecimal() * MathD.Tau - MathD.Pi);
+        public decimal BaselineM() => (_random.NextDecimal() * MathM.Tau - MathM.Pi);
 
         [Benchmark]
-        public decimal SinM() => MathD.Sin(_random.NextDecimal() * MathD.Tau - MathD.Pi);
+        public decimal SinM() => MathM.Sin(_random.NextDecimal() * MathM.Tau - MathM.Pi);
         [Benchmark]
-        public decimal CosM() => MathD.Cos(_random.NextDecimal() * MathD.Tau - MathD.Pi);
+        public decimal CosM() => MathM.Cos(_random.NextDecimal() * MathM.Tau - MathM.Pi);
         [Benchmark]
-        public decimal TanM() => MathD.Tan((_random.NextDecimal() - 0.5M) * MathD.Pi - 0.999M);
+        public decimal TanM() => MathM.Tan((_random.NextDecimal() - 0.5M) * MathM.Pi - 0.999M);
 
         [Benchmark]
         public double BaselineD() => (_random.NextDouble() * Math.PI * 2.0 - Math.PI);
@@ -78,9 +78,9 @@ namespace Determon.PerformanceTests
         public decimal BaselineM() => _random.NextDecimal();
 
         [Benchmark]
-        public decimal SqrtM() => MathD.Sqrt(_random.NextDecimal());
+        public decimal SqrtM() => MathM.Sqrt(_random.NextDecimal());
         [Benchmark]
-        public decimal SqrtEstimateM() => MathD.Sqrt(_random.NextDecimal(), 0.7M);
+        public decimal SqrtEstimateM() => MathM.Sqrt(_random.NextDecimal(), 0.7M);
 
         [Benchmark]
         public double BaselineD() => _random.NextDouble();
@@ -113,7 +113,7 @@ namespace Determon.PerformanceTests
         public decimal BaselineM() => _random.NextDecimal();
 
         [Benchmark]
-        public decimal PowM() => MathD.Pow(_random.NextDecimal(), 0.5M + _random.NextDecimal());
+        public decimal PowM() => MathM.Pow(_random.NextDecimal(), 0.5M + _random.NextDecimal());
 
         [Benchmark]
         public double BaselineD() => _random.NextDouble();
@@ -148,10 +148,10 @@ namespace Determon.PerformanceTests
         public decimal BaselineM() => _random.NextDecimal();
 
         [Benchmark]
-        public decimal Atan2M() => MathD.Atan2(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+        public decimal Atan2M() => MathM.Atan2(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
 
         [Benchmark]
-        public decimal Atan2NonNegativeM() => MathD.Atan2NonNegative(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+        public decimal Atan2NonNegativeM() => MathM.Atan2NonNegative(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
 
         [Benchmark]
         public double BaselineD() => _random.NextDouble();

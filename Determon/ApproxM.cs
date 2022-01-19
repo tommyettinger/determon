@@ -110,6 +110,34 @@ namespace Determon
             radians *= 2M - radians;
             return radians * (-0.775M - 0.225M * radians) * ((floor & 2L) - 1L);
         }
+        public static decimal Asin(decimal x)
+        {
+            decimal x2 = x * x;
+            decimal x3 = x * x2;
+            if (x >= decimal.Zero)
+            {
+                return HalfPi - MathM.Sqrt(decimal.One - x, 0.7M) *
+                        (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
+            }
+            else
+            {
+                return MathM.Sqrt(decimal.One + x, 0.7M) *
+                    (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3) - HalfPi;
+            }
+        }
+        public static decimal Acos(decimal x)
+        {
+            decimal x2 = x * x;
+            decimal x3 = x * x2;
+            if (x >= decimal.Zero)
+            {
+                return MathM.Sqrt(decimal.One - x, 0.7M) * (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
+            }
+            else
+            {
+                return Pi - MathM.Sqrt(decimal.One + x, 0.7M) * (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3);
+            }
+        }
 
         public static decimal Atan(decimal i)
         {
@@ -138,7 +166,7 @@ namespace Determon
             else if (y > decimal.Zero) return x + HalfPi;
             else if (y < decimal.Zero) return x - HalfPi;
             else return decimal.Zero;
-
         }
+
     }
 }

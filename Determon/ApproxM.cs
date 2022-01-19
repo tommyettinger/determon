@@ -84,16 +84,6 @@ namespace Determon
         private const decimal InverseLog10 = 0.434294481903251827651128918916605082294397005803666566114M;
 
         /// <summary>
-        /// Represents 0.0M .
-        /// </summary>
-        private const decimal Zero = decimal.Zero;
-
-        /// <summary>
-        /// Represents 1.0M .
-        /// </summary>
-        private const decimal One = decimal.One;
-
-        /// <summary>
         /// Represents 0.5M .
         /// </summary>
         private const decimal Half = 0.5M;
@@ -101,7 +91,7 @@ namespace Determon
         /// <summary>
         /// 1.0M divided by 3.0M. Exactly what it says.
         /// </summary>
-        private const decimal Third = 1M / 3M;
+        private const decimal Third = decimal.One / 3M;
 
         public static decimal Sin(decimal radians)
         {
@@ -114,11 +104,41 @@ namespace Determon
 
         public static decimal Cos(decimal radians)
         {
-            radians = radians * InverseHalfPi + 1M;
+            radians = radians * InverseHalfPi + decimal.One;
             long floor = (radians >= 0M ? (long)radians : (long)radians - 1L) & -2L;
             radians -= floor;
             radians *= 2M - radians;
             return radians * (-0.775M - 0.225M * radians) * ((floor & 2L) - 1L);
+        }
+
+        public static decimal Atan(decimal i)
+        {
+            decimal n = Math.Abs(i);
+            decimal c = (n - decimal.One) / (n + decimal.One);
+            decimal c2 = c * c;
+            decimal c3 = c * c2;
+            decimal c5 = c3 * c2;
+            decimal c7 = c5 * c2;
+            return (0.7853981633974483M +
+                    (0.999215M * c - 0.3211819M * c3 + 0.1462766M * c5 - 0.0389929M * c7)) * Math.Sign(i);
+        }
+
+        public static decimal Atan2(decimal y, decimal x)
+        {
+            decimal n = y / x;
+            if (x > 0)
+                return Atan(n);
+            else if (x < decimal.Zero)
+            {
+                if (y >= decimal.Zero)
+                    return Atan(n) + Pi;
+                else
+                    return Atan(n) - Pi;
+            }
+            else if (y > decimal.Zero) return x + HalfPi;
+            else if (y < decimal.Zero) return x - HalfPi;
+            else return decimal.Zero;
+
         }
     }
 }

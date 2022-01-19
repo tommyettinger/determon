@@ -6,23 +6,25 @@ using ShaiRandom.Generators;
 namespace Determon.PerformanceTests
 {
     ///<summary>
-    ///|    Method |         Mean |      Error |     StdDev |       Median |
-    ///|---------- |-------------:|-----------:|-----------:|-------------:|
-    ///| BaselineM |    68.198 ns |  1.2059 ns |  1.1280 ns |    67.490 ns |
-    ///|      SinM | 2,294.860 ns | 17.1421 ns | 13.3834 ns | 2,298.089 ns |
-    ///|      CosM | 2,619.419 ns | 51.8329 ns | 59.6909 ns | 2,594.356 ns |
-    ///|      TanM | 3,739.113 ns | 71.7061 ns | 85.3610 ns | 3,681.668 ns |
-    ///| BaselineD |     3.483 ns |  0.0986 ns |  0.1210 ns |     3.414 ns |
-    ///|      SinD |    16.974 ns |  0.1640 ns |  0.1369 ns |    16.920 ns |
-    ///|      CosD |    17.234 ns |  0.3602 ns |  0.4288 ns |    16.996 ns |
-    ///|      TanD |    18.184 ns |  0.1991 ns |  0.1662 ns |    18.180 ns |
-    ///| BaselineF |     3.978 ns |  0.1067 ns |  0.1270 ns |     3.915 ns |
-    ///|      SinF |    19.037 ns |  0.4107 ns |  0.4730 ns |    18.778 ns |
-    ///|      CosF |    18.963 ns |  0.4059 ns |  0.6075 ns |    18.594 ns |
-    ///|      TanF |    17.187 ns |  0.1527 ns |  0.1192 ns |    17.223 ns |
+    ///|    Method |         Mean |      Error |     StdDev |
+    ///|---------- |-------------:|-----------:|-----------:|
+    ///| BaselineM |    69.554 ns |  1.2544 ns |  1.1734 ns |
+    ///|      SinM | 2,302.758 ns | 45.4408 ns | 50.5073 ns |
+    ///|      CosM | 2,553.580 ns | 36.9164 ns | 32.7254 ns |
+    ///|      TanM | 3,652.843 ns | 21.6698 ns | 20.2699 ns |
+    ///| BaselineD |     3.569 ns |  0.0973 ns |  0.0955 ns |
+    ///|      SinD |    16.982 ns |  0.2945 ns |  0.2299 ns |
+    ///|      CosD |    17.016 ns |  0.3588 ns |  0.4132 ns |
+    ///|      TanD |    18.535 ns |  0.3997 ns |  0.5471 ns |
+    ///| BaselineF |     4.031 ns |  0.1089 ns |  0.1596 ns |
+    ///|      SinF |    19.721 ns |  0.0510 ns |  0.0452 ns |
+    ///|      CosF |    18.929 ns |  0.3622 ns |  0.6248 ns |
+    ///|      TanF |    17.529 ns |  0.3202 ns |  0.3559 ns |
+    ///|     SinAM |   306.580 ns |  2.5453 ns |  1.9872 ns |
+    ///|     CosAM |   321.819 ns |  1.3316 ns |  1.3078 ns |
     ///</summary>
     ///<remarks>
-    ///The timing on the M benchmarks, for decimals, seems inaccurate between runs, but always extremely high.
+    ///The timing on the M benchmarks, for decimals, seems inaccurate between runs, but always extremely high. AM benchmarks are decimal approximations.
     ///</remarks>
     public class TrigonometryComparison
     {
@@ -55,6 +57,11 @@ namespace Determon.PerformanceTests
         public double CosF() => MathF.Cos(_random.NextFloat() * MathF.PI * 2f - MathF.PI);
         [Benchmark]
         public double TanF() => MathF.Tan((_random.NextFloat() - 0.5f) * MathF.PI * 0.999f);
+
+        [Benchmark]
+        public decimal SinAM() => ApproxM.Sin(_random.NextDecimal() * MathM.Tau - MathM.Pi);
+        [Benchmark]
+        public decimal CosAM() => ApproxM.Cos(_random.NextDecimal() * MathM.Tau - MathM.Pi);
     }
     ///<summary>
     ///|        Method |         Mean |      Error |     StdDev |       Median |

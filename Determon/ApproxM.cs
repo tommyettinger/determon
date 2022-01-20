@@ -77,7 +77,7 @@ namespace Determon
         /// <remarks>
         /// This is more permissive than the Epsilon in MathM.
         /// </remarks>
-        public const decimal NEpsilon = -0.0000001M;
+        internal const decimal NEpsilon = -Epsilon;
 
         /// <summary>
         /// The irrational number pi divided by 4M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
@@ -108,10 +108,18 @@ namespace Determon
         /// A square root method for decimals.
         /// </summary>
         /// <param name="d">The square to find the square root of.</param>
-        /// <returns>The exact square root of d, as well as a decimal can represent it.</returns>
+        /// <returns>The approximate square root of d, as well as a decimal can represent it.</returns>
         public static decimal Sqrt(decimal d)
         {
-            return Sqrt(d, d * 0.5M);
+            decimal guess = d * Half, previous;
+            do
+            {
+                if (guess <= decimal.Zero) return decimal.Zero;
+                previous = guess;
+                guess = (previous + d / previous) * Half;
+            }
+            while (Math.Abs(previous - guess) > Epsilon);
+            return guess;
         }
 
         /// <summary>
@@ -125,13 +133,15 @@ namespace Determon
         /// <returns>The exact square root of d, as well as a decimal can represent it.</returns>
         public static decimal Sqrt(decimal d, decimal guess)
         {
-            var result = d / guess;
-            var average = (guess + result) * 0.5M;
-            var diff = average - guess;
-            if (diff < Epsilon && diff > NEpsilon) // This checks with mediocre precision.
-                return average;
-            else
-                return Sqrt(d, average);
+            decimal previous;
+            do
+            {
+                if (guess == decimal.Zero) return decimal.Zero;
+                previous = guess;
+                guess = (previous + d / previous) * Half;
+            }
+            while (Math.Abs(previous - guess) > Epsilon);
+            return guess;
         }
 
         public static decimal Sin(decimal radians)

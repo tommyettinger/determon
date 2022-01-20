@@ -6,7 +6,7 @@ namespace Determon.UnitTests
 {
     public class MathMTests
     {
-        private const decimal Epsilon = 0.000000000001M;
+        private const decimal Epsilon = ApproxM.Epsilon;
         private const int TestCount = 1000;
         private readonly Random _random = new Random();
 
@@ -37,9 +37,12 @@ namespace Determon.UnitTests
             {
                 double d = _random.NextDouble() * 65536.0;
                 decimal d1 = (decimal)d;
+                decimal d2 = d1;
                 d = Math.Sqrt(d);
                 d1 = MathM.Sqrt(d1);
+                d2 = ApproxM.Sqrt(d2);
                 Assert.True(MathM.Abs((decimal)d - d1) < Epsilon);
+                Assert.True(MathM.Abs((decimal)d - d2) < Epsilon);
             }
         }
         [Fact]
@@ -187,13 +190,13 @@ namespace Determon.UnitTests
             double y = -5;
             double result = Math.Pow(x, y);
 
-            Assert.Equal(1E-05, result);
+            Assert.Equal(1E-5, result);
 
             decimal dx = 10;
             decimal dy = -5;
             decimal dResult = MathM.Pow(dx, dy);
 
-            Assert.Equal(0.00001m, dResult);
+            Assert.Equal(1E-5M, dResult);
         }
         [Fact]
         public void FactPow002()
@@ -202,13 +205,13 @@ namespace Determon.UnitTests
             double y = 5;
             double result = Math.Pow(x, y);
 
-            Assert.Equal(100000, result);
+            Assert.Equal(1E+5, result);
 
             decimal dx = 10;
             decimal dy = 5;
             decimal dResult = MathM.Pow(dx, dy);
 
-            Assert.Equal(100000m, dResult);
+            Assert.Equal(1E+5m, dResult);
         }
 
     }

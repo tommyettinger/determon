@@ -64,9 +64,20 @@ namespace Determon
         public const decimal Phi = 1.61803398874989484820458683436563811772030917980576286213544862270526046281890244970720720418939113748475M;
 
         /// <summary>
-        /// The minimum value this permits as tolerance in equality comparisons.
+        /// The smallest positive value this permits as tolerance in equality comparisons.
         /// </summary>
-        public const decimal Epsilon = 0.0000000000000000001M;
+        /// <remarks>
+        /// This is more permissive than the Epsilon in MathM.
+        /// </remarks>
+        public const decimal Epsilon = 0.0000001M;
+
+        /// <summary>
+        /// The smallest negative value this permits as tolerance in equality comparisons.
+        /// </summary>
+        /// <remarks>
+        /// This is more permissive than the Epsilon in MathM.
+        /// </remarks>
+        public const decimal NEpsilon = -0.0000001M;
 
         /// <summary>
         /// The irrational number pi divided by 4M, to 104 digits as a decimal. It is likely that far fewer digits will actually be used.
@@ -93,6 +104,36 @@ namespace Determon
         /// </summary>
         private const decimal Third = decimal.One / 3M;
 
+        /// <summary>
+        /// A square root method for decimals.
+        /// </summary>
+        /// <param name="d">The square to find the square root of.</param>
+        /// <returns>The exact square root of d, as well as a decimal can represent it.</returns>
+        public static decimal Sqrt(decimal d)
+        {
+            return Sqrt(d, d * 0.5M);
+        }
+
+        /// <summary>
+        /// A variant square root method for decimals that allows specifying an approximate guess, or seed value, that is likely to be close to the actual square root.
+        /// </summary>
+        /// <remarks>
+        /// This has precision up to <see cref="Epsilon"/>. Credit to Bobson for coming up with this recursive method: https://stackoverflow.com/a/13282997/786740
+        /// </remarks>
+        /// <param name="d">The square to find the square root of.</param>
+        /// <param name="guess">A decimal that is hopefully relatively close to the actual square root, used to speed up the algorithm if it is close.</param>
+        /// <returns>The exact square root of d, as well as a decimal can represent it.</returns>
+        public static decimal Sqrt(decimal d, decimal guess)
+        {
+            var result = d / guess;
+            var average = (guess + result) * 0.5M;
+            var diff = average - guess;
+            if (diff < Epsilon && diff > NEpsilon) // This checks with mediocre precision.
+                return average;
+            else
+                return Sqrt(d, average);
+        }
+
         public static decimal Sin(decimal radians)
         {
             radians *= InverseHalfPi;
@@ -116,12 +157,12 @@ namespace Determon
             decimal x3 = x * x2;
             if (x >= decimal.Zero)
             {
-                return HalfPi - MathM.Sqrt(decimal.One - x, 0.7M) *
+                return HalfPi - Sqrt(decimal.One - x, 0.7M) *
                         (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
             }
             else
             {
-                return MathM.Sqrt(decimal.One + x, 0.7M) *
+                return Sqrt(decimal.One + x, 0.7M) *
                     (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3) - HalfPi;
             }
         }
@@ -131,11 +172,11 @@ namespace Determon
             decimal x3 = x * x2;
             if (x >= decimal.Zero)
             {
-                return MathM.Sqrt(decimal.One - x, 0.7M) * (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
+                return Sqrt(decimal.One - x, 0.7M) * (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
             }
             else
             {
-                return Pi - MathM.Sqrt(decimal.One + x, 0.7M) * (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3);
+                return Pi - Sqrt(decimal.One + x, 0.7M) * (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3);
             }
         }
 

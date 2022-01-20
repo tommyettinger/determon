@@ -64,18 +64,20 @@ namespace Determon.PerformanceTests
         public decimal CosAM() => ApproxM.Cos(_random.NextDecimal() * MathM.Tau - MathM.Pi);
     }
     ///<summary>
-    ///|        Method |         Mean |      Error |     StdDev |       Median |
-    ///|-------------- |-------------:|-----------:|-----------:|-------------:|
-    ///|     BaselineM |     5.734 ns |  0.0964 ns |  0.0902 ns |     5.785 ns |
-    ///|         SqrtM | 1,355.962 ns | 22.5503 ns | 21.0936 ns | 1,348.748 ns |
-    ///| SqrtEstimateM | 1,050.689 ns | 12.8492 ns | 12.0191 ns | 1,044.573 ns |
-    ///|     BaselineD |     2.392 ns |  0.0767 ns |  0.0821 ns |     2.433 ns |
-    ///|         SqrtD |     3.662 ns |  0.1011 ns |  0.1417 ns |     3.737 ns |
-    ///|     BaselineF |     3.456 ns |  0.0964 ns |  0.1688 ns |     3.532 ns |
-    ///|         SqrtF |     3.891 ns |  0.0851 ns |  0.0711 ns |     3.923 ns |
+    ///|         Method |         Mean |      Error |     StdDev |       Median |
+    ///|--------------- |-------------:|-----------:|-----------:|-------------:|
+    ///|      BaselineM |     5.082 ns |  0.0799 ns |  0.0708 ns |     5.103 ns |
+    ///|          SqrtM | 1,362.593 ns | 26.1830 ns | 35.8396 ns | 1,385.548 ns |
+    ///|  SqrtEstimateM | 1,045.317 ns | 20.8136 ns | 24.7771 ns | 1,032.029 ns |
+    ///|         SqrtAM | 1,095.562 ns | 21.3017 ns | 21.8753 ns | 1,102.160 ns |
+    ///| SqrtEstimateAM |   760.210 ns | 14.6703 ns | 15.6970 ns |   768.238 ns |
+    ///|      BaselineD |     2.332 ns |  0.0744 ns |  0.0696 ns |     2.347 ns |
+    ///|          SqrtD |     3.794 ns |  0.0709 ns |  0.0664 ns |     3.839 ns |
+    ///|      BaselineF |     3.451 ns |  0.0223 ns |  0.0209 ns |     3.450 ns |
+    ///|          SqrtF |     4.049 ns |  0.0207 ns |  0.0184 ns |     4.048 ns |
     ///</summary>
     ///<remarks>
-    ///OK, 2 orders of magnitude slower to do decimal square roots, and then some...
+    ///OK, 2 orders of magnitude slower to do decimal square roots, and then some... Having a good guess helps, though.
     ///</remarks>
     public class SqrtComparison
     {
@@ -88,6 +90,11 @@ namespace Determon.PerformanceTests
         public decimal SqrtM() => MathM.Sqrt(_random.NextDecimal());
         [Benchmark]
         public decimal SqrtEstimateM() => MathM.Sqrt(_random.NextDecimal(), 0.7M);
+
+        [Benchmark]
+        public decimal SqrtAM() => ApproxM.Sqrt(_random.NextDecimal());
+        [Benchmark]
+        public decimal SqrtEstimateAM() => ApproxM.Sqrt(_random.NextDecimal(), 0.7M);
 
         [Benchmark]
         public double BaselineD() => _random.NextDouble();

@@ -277,11 +277,11 @@ namespace Determon
             var result = Zero;
             var iteration = 0;
             var y = One;
-            var cacheResult = result - One;
-            while (cacheResult != result && iteration < MaxIterations)
+            var cachedResult = result - One;
+            while (cachedResult != result && iteration < MaxIterations)
             {
                 iteration++;
-                cacheResult = result;
+                cachedResult = result;
                 y *= -x;
                 result += y / iteration;
             }

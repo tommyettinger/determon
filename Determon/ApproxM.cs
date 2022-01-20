@@ -293,6 +293,43 @@ namespace Determon
                 return prod;
             }
         }
+        /// <summary>
+        /// Analog to Math.Log().
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static decimal Log(decimal x)
+        {
+            if (x <= decimal.Zero)
+            {
+                throw new ArgumentException("x must be greater than zero.");
+            }
+            var count = 0;
+            while (x >= decimal.One)
+            {
+                x *= InverseE;
+                count++;
+            }
+            while (x <= InverseE)
+            {
+                x *= E;
+                count--;
+            }
+            x--;
+            if (x == decimal.Zero) return count;
+            var result = decimal.Zero;
+            var iteration = 0;
+            var y = decimal.One;
+            var cachedResult = result - decimal.One;
+            while (Math.Abs(cachedResult - result) > Epsilon && iteration < 20)
+            {
+                iteration++;
+                cachedResult = result;
+                y *= -x;
+                result += y / iteration;
+            }
+            return count - result;
+        }
 
     }
 }

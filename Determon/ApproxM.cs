@@ -219,5 +219,80 @@ namespace Determon
             else return decimal.Zero;
         }
 
+        /// <summary>
+        /// Analog to Math.Exp().
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static decimal Exp(decimal x)
+        {
+            var count = 0;
+
+            if (x > decimal.One)
+            {
+                count = decimal.ToInt32(decimal.Truncate(x));
+                x -= decimal.Truncate(x);
+            }
+
+            if (x < decimal.Zero)
+            {
+                count = decimal.ToInt32(decimal.Truncate(x) - 1);
+                x = decimal.One + (x - decimal.Truncate(x));
+            }
+
+            var iteration = 1;
+            var result = decimal.One;
+            var factorial = decimal.One;
+            decimal cachedResult;
+            do
+            {
+                cachedResult = result;
+                factorial *= x / iteration++;
+                result += factorial;
+            } while (Math.Abs(cachedResult - result) > Epsilon);
+
+            if (count == 0)
+                return result;
+            return result * PowInt(E, count);
+        }
+
+        /// <summary>
+        /// Raises a decimal value to an integer power and returns the result.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="exponent"></param>
+        /// <returns></returns>
+        public static decimal PowInt(decimal value, int exponent)
+        {
+            while (true)
+            {
+                if (exponent == decimal.Zero) return decimal.One;
+                if (exponent < decimal.Zero)
+                {
+                    value = decimal.One / value;
+                    exponent = -exponent;
+                    continue;
+                }
+
+                var q = exponent;
+                var prod = decimal.One;
+                var current = value;
+                while (q > 0)
+                {
+                    if ((q & 1) == 1)
+                    {
+                        // detects the 1s in the binary expression of power
+                        prod = current * prod; // picks up the relevant power
+                        q--;
+                    }
+
+                    current *= current; // value^i -> value^(2*i)
+                    q >>= 1;
+                }
+
+                return prod;
+            }
+        }
+
     }
 }

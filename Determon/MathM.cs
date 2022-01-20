@@ -185,7 +185,7 @@ namespace Determon
             if (isPowerInteger && value < Zero)
             {
                 int powerInt = (int)exponent;
-                if (powerInt % 2 == 0)
+                if ((powerInt & 1) == 0)
                 {
                     return Exp(exponent * Log(-value));
                 }
@@ -225,7 +225,7 @@ namespace Determon
                 var current = value;
                 while (q > 0)
                 {
-                    if (q % 2 == 1)
+                    if ((q & 1) == 1)
                     {
                         // detects the 1s in the binary expression of power
                         prod = current * prod; // picks up the relevant power

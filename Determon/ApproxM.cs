@@ -255,6 +255,61 @@ namespace Determon
                 return result;
             return result * PowInt(E, count);
         }
+        private static bool IsInteger(decimal value)
+        {
+            var trunc = decimal.Truncate(value);
+            return Math.Abs(value - trunc) <= Epsilon;
+        }
+
+        /// <summary>
+        /// Analog to Math.Pow().
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="exponent"></param>
+        /// <returns></returns>
+        public static decimal Pow(decimal value, decimal exponent)
+        {
+            if (exponent == decimal.Zero) return decimal.One;
+            if (exponent == decimal.One) return value;
+            if (value == decimal.One) return decimal.One;
+
+            if (value == decimal.Zero)
+            {
+                if (exponent > decimal.Zero)
+                {
+                    return decimal.Zero;
+                }
+
+                throw new Exception("Invalid Operation: base of zero with a negative power.");
+            }
+
+            if (exponent == decimal.MinusOne) return decimal.One / value;
+
+            var isPowerInteger = IsInteger(exponent);
+            if (value < decimal.Zero && !isPowerInteger)
+            {
+                throw new Exception("Invalid Operation: negative base with a non-integer power.");
+            }
+
+            if (isPowerInteger && value > decimal.Zero)
+            {
+                int powerInt = (int)exponent;
+                return PowInt(value, powerInt);
+            }
+
+            if (isPowerInteger && value < decimal.Zero)
+            {
+                int powerInt = (int)exponent;
+                if ((powerInt & 1) == 0)
+                {
+                    return Exp(exponent * Log(-value));
+                }
+
+                return -Exp(exponent * Log(-value));
+            }
+
+            return Exp(exponent * Log(value));
+        }
 
         /// <summary>
         /// Raises a decimal value to an integer power and returns the result.

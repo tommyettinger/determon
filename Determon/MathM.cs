@@ -198,8 +198,8 @@ namespace Determon
 
         private static bool IsInteger(decimal value)
         {
-            var longValue = (long)value;
-            return Abs(value - longValue) <= Epsilon;
+            var trunc = decimal.Truncate(value);
+            return Math.Abs(value - trunc) <= Epsilon;
         }
 
         /// <summary>
@@ -467,20 +467,6 @@ namespace Determon
         }
 
         /// <summary>
-        /// Analog to Math.Abs().
-        /// </summary>
-        /// <param name="x"></param>
-        /// <returns></returns>
-        public static decimal Abs(decimal x)
-        {
-            if (x <= Zero)
-            {
-                return -x;
-            }
-            return x;
-        }
-
-        /// <summary>
         /// Analog to Math.Asin().
         /// </summary>
         /// <param name="x"></param>
@@ -507,7 +493,7 @@ namespace Determon
 
             //for calculating new value near to zero than current
             //because we gain more speed with values near to zero
-            if (Abs(x) > Abs(newX))
+            if (Math.Abs(x) > Math.Abs(newX))
             {
                 var t = Asin(newX);
                 return Half * (HalfPi - t);

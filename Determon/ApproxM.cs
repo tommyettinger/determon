@@ -205,7 +205,7 @@ namespace Determon
         public static decimal Atan2(decimal y, decimal x)
         {
             decimal n = y / x;
-            if (x > 0)
+            if (x > decimal.Zero)
                 return Atan(n);
             else if (x < decimal.Zero)
             {
@@ -216,6 +216,25 @@ namespace Determon
             }
             else if (y > decimal.Zero) return x + HalfPi;
             else if (y < decimal.Zero) return x - HalfPi;
+            else return decimal.Zero;
+        }
+
+        public static decimal Atan2NonNegative(decimal y, decimal x)
+        {
+            decimal n = y / x;
+            if (x > decimal.Zero)
+            {
+                if(y >= decimal.Zero)
+                    return Atan(n);
+                else
+                    return Atan(n) + Pi2;
+            }
+            else if (x < decimal.Zero)
+            {
+                return Atan(n) + Pi;
+            }
+            else if (y > decimal.Zero) return HalfPi;
+            else if (y < decimal.Zero) return Pi + HalfPi;
             else return decimal.Zero;
         }
 

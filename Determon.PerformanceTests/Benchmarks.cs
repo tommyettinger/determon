@@ -141,18 +141,20 @@ namespace Determon.PerformanceTests
     }
 
     ///<summary>
-    ///|            Method |         Mean |       Error |      StdDev |       Median |
-    ///|------------------ |-------------:|------------:|------------:|-------------:|
-    ///|         BaselineM |     5.134 ns |   0.1257 ns |   0.1762 ns |     5.136 ns |
-    ///|            Atan2M | 6,639.725 ns | 130.5516 ns | 218.1223 ns | 6,680.252 ns |
-    ///| Atan2NonNegativeM | 6,688.209 ns | 130.1905 ns | 224.5723 ns | 6,704.941 ns |
-    ///|         BaselineD |     2.372 ns |   0.0742 ns |   0.1111 ns |     2.363 ns |
-    ///|            Atan2D |    34.196 ns |   0.7108 ns |   1.2070 ns |    34.740 ns |
-    ///|         BaselineF |     3.356 ns |   0.0954 ns |   0.1305 ns |     3.384 ns |
-    ///|            Atan2F |    30.018 ns |   0.6190 ns |   0.8677 ns |    30.380 ns |
+    ///|             Method |         Mean |       Error |      StdDev |
+    ///|------------------- |-------------:|------------:|------------:|
+    ///|          BaselineM |     5.967 ns |   0.1408 ns |   0.1830 ns |
+    ///|             Atan2M | 6,622.018 ns | 130.5456 ns | 199.3569 ns |
+    ///|  Atan2NonNegativeM | 6,813.540 ns | 134.7338 ns | 269.0780 ns |
+    ///|            Atan2AM |   761.638 ns |  15.0297 ns |  23.8387 ns |
+    ///| Atan2NonNegativeAM |   751.550 ns |  14.2900 ns |  23.0757 ns |
+    ///|          BaselineD |     2.375 ns |   0.0776 ns |   0.1438 ns |
+    ///|             Atan2D |    34.854 ns |   0.5727 ns |   0.5077 ns |
+    ///|          BaselineF |     3.330 ns |   0.0935 ns |   0.1341 ns |
+    ///|             Atan2F |    30.100 ns |   0.3868 ns |   0.3618 ns |
     ///</summary>
     ///<remarks>
-    ///Again, about a 200x difference. Ouch.
+    ///Again, about a 200x difference. Ouch. Less horrible for approximations, about 22x.
     ///</remarks>
     public class Atan2Comparison
     {
@@ -166,6 +168,12 @@ namespace Determon.PerformanceTests
 
         [Benchmark]
         public decimal Atan2NonNegativeM() => MathM.Atan2NonNegative(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+
+        [Benchmark]
+        public decimal Atan2AM() => ApproxM.Atan2(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
+
+        [Benchmark]
+        public decimal Atan2NonNegativeAM() => ApproxM.Atan2NonNegative(_random.NextDecimal() - 0.5M, _random.NextDecimal() - 0.5M);
 
         [Benchmark]
         public double BaselineD() => _random.NextDouble();

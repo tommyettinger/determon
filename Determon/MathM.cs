@@ -385,9 +385,10 @@ namespace Determon
             //truncating to  [-2*PI;2*PI]
             TruncateToPeriodicInterval(ref x);
 
-            //now x in [-2*PI;2*PI]
+            //now x is in [-2*PI;2*PI]
             return x <= -Pi || (x > Zero && x <= Pi);
         }
+
         /// <summary>
         /// A square root method for decimals.
         /// </summary>
@@ -523,6 +524,7 @@ namespace Determon
         {
             if (x == Zero) return Zero;
             if (x == One) return QuarterPi;
+            if (x == -One) return -QuarterPi;
             return Asin(x / Sqrt(One + x * x));
         }
         /// <summary>

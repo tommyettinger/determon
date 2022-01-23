@@ -361,31 +361,24 @@ namespace Determon
 
 
         /// <summary>
-        /// Truncates a decimal ref parameter to [-2*PI;2*PI].
+        /// Truncates a decimal ref parameter to [-Pi2;Pi2].
         /// </summary>
         /// <param name="x"></param>
         private static void TruncateToPeriodicInterval(ref decimal x)
         {
-            while (x >= Pi2)
+            if (x >= Pi2 || x <= -Pi2)
             {
-                var divide = Math.Abs(decimal.ToInt32(x / Pi2));
-                x -= divide * Pi2;
-            }
-
-            while (x <= -Pi2)
-            {
-                var divide = Math.Abs(decimal.ToInt32(x / Pi2));
-                x += divide * Pi2;
+                x -= decimal.Truncate(x / Pi2) * Pi2;
             }
         }
 
 
         private static bool IsSignOfSinePositive(decimal x)
         {
-            //truncating to  [-2*PI;2*PI]
+            //truncating to  [-Pi2;Pi2]
             TruncateToPeriodicInterval(ref x);
 
-            //now x is in [-2*PI;2*PI]
+            //now x is in [-Pi2;Pi2]
             return x <= -Pi || (x > Zero && x <= Pi);
         }
 

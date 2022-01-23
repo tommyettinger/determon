@@ -161,6 +161,57 @@ namespace Determon
             radians *= 2M - radians;
             return radians * (-0.775M - 0.225M * radians) * ((floor & 2L) - 1L);
         }
+        /// <summary>
+        /// Analog to Math.Tan().
+        /// </summary>
+        /// <remarks>
+        /// This is essentially the same as the method in MathM, except that internally it uses approximations for various
+        /// calculations and so is likely somewhat less accurate than Sin() or Cos() in this class.
+        /// </remarks>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static decimal Tan(decimal x)
+        {
+            decimal cos = Cos(x);
+            if (cos == decimal.Zero) throw new ArgumentException(nameof(x));
+            //calculate sin using cos, then divide that sin by cos to get tan
+            return CalculateSinFromCos(x, cos) / cos;
+        }
+
+        /// <summary>
+        /// Helper function for calculating sin(x) from cos(x).
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="cos"></param>
+        /// <returns></returns>
+        private static decimal CalculateSinFromCos(decimal x, decimal cos)
+        {
+            var moduleOfSin = Sqrt(decimal.One - (cos * cos), Half);
+            if (IsSignOfSinePositive(x)) return moduleOfSin;
+            return -moduleOfSin;
+        }
+        /// <summary>
+        /// Truncates a decimal ref parameter to [-Pi2;Pi2].
+        /// </summary>
+        /// <param name="x"></param>
+        private static void TruncateToPeriodicInterval(ref decimal x)
+        {
+            if (x >= Pi2 || x <= -Pi2)
+            {
+                x -= decimal.Truncate(x / Pi2) * Pi2;
+            }
+        }
+
+
+        private static bool IsSignOfSinePositive(decimal x)
+        {
+            //truncating to  [-Pi2;Pi2]
+            TruncateToPeriodicInterval(ref x);
+
+            //now x is in [-Pi2;Pi2]
+            return x <= -Pi || (x > decimal.Zero && x <= Pi);
+        }
+
         public static decimal Asin(decimal x)
         {
             decimal x2 = x * x;

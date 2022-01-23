@@ -333,9 +333,8 @@ namespace Determon
         {
             var cos = Cos(x);
             if (cos == Zero) throw new ArgumentException(nameof(x));
-            //calculate sin using cos
-            var sin = CalculateSinFromCos(x, cos);
-            return sin / cos;
+            //calculate sin using cos, then divide that sin by cos to get tan
+            return CalculateSinFromCos(x, cos) / cos;
         }
         /// <summary>
         /// Helper function for calculating sin(x) from cos(x).

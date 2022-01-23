@@ -165,8 +165,8 @@ namespace Determon
         /// Analog to Math.Tan().
         /// </summary>
         /// <remarks>
-        /// This is essentially the same as the method in MathM, except that internally it uses approximations for various
-        /// calculations and so is likely somewhat less accurate than Sin() or Cos() in this class.
+        /// This is pretty simple inside, but turns out to be about twice as fast as a similar method to MathM's Tan() code.
+        /// It gets Cos(x), throws an ArgumentException if that is 0, and otherwise gets Sin(x) and divides it by the earlier cosine.
         /// </remarks>
         /// <param name="x"></param>
         /// <returns></returns>
@@ -174,42 +174,8 @@ namespace Determon
         {
             decimal cos = Cos(x);
             if (cos == decimal.Zero) throw new ArgumentException(nameof(x));
-            //calculate sin using cos, then divide that sin by cos to get tan
-            return CalculateSinFromCos(x, cos) / cos;
-        }
-
-        /// <summary>
-        /// Helper function for calculating sin(x) from cos(x).
-        /// </summary>
-        /// <param name="x"></param>
-        /// <param name="cos"></param>
-        /// <returns></returns>
-        private static decimal CalculateSinFromCos(decimal x, decimal cos)
-        {
-            var moduleOfSin = Sqrt(decimal.One - (cos * cos), Half);
-            if (IsSignOfSinePositive(x)) return moduleOfSin;
-            return -moduleOfSin;
-        }
-        /// <summary>
-        /// Truncates a decimal ref parameter to [-Pi2;Pi2].
-        /// </summary>
-        /// <param name="x"></param>
-        private static void TruncateToPeriodicInterval(ref decimal x)
-        {
-            if (x >= Pi2 || x <= -Pi2)
-            {
-                x -= decimal.Truncate(x / Pi2) * Pi2;
-            }
-        }
-
-
-        private static bool IsSignOfSinePositive(decimal x)
-        {
-            //truncating to  [-Pi2;Pi2]
-            TruncateToPeriodicInterval(ref x);
-
-            //now x is in [-Pi2;Pi2]
-            return x <= -Pi || (x > decimal.Zero && x <= Pi);
+            //calculate sin using the approximation here, then divide that sin by cos to get tan
+            return Sin(x) / cos;
         }
 
         public static decimal Asin(decimal x)
@@ -292,6 +258,9 @@ namespace Determon
         /// <summary>
         /// Analog to Math.Exp().
         /// </summary>
+        /// <remarks>
+        /// This is an approximate version of the Exp() code in MathM.
+        /// </remarks>
         /// <param name="x"></param>
         /// <returns></returns>
         public static decimal Exp(decimal x)
@@ -327,13 +296,15 @@ namespace Determon
         }
         private static bool IsInteger(decimal value)
         {
-            var trunc = decimal.Truncate(value);
-            return Math.Abs(value - trunc) <= Epsilon;
+            return Math.Abs(value - decimal.Truncate(value)) <= Epsilon;
         }
 
         /// <summary>
         /// Analog to Math.Pow().
         /// </summary>
+        /// <remarks>
+        /// This is an approximation for non-integer and most negative exponents, but is accurate for positive integer, -1, and 0 exponents.
+        /// </remarks>
         /// <param name="value"></param>
         /// <param name="exponent"></param>
         /// <returns></returns>
@@ -355,7 +326,7 @@ namespace Determon
 
             if (exponent == decimal.MinusOne) return decimal.One / value;
 
-            var isPowerInteger = IsInteger(exponent);
+            bool isPowerInteger = IsInteger(exponent);
             if (value < decimal.Zero && !isPowerInteger)
             {
                 throw new Exception("Invalid Operation: negative base with a non-integer power.");
@@ -384,6 +355,9 @@ namespace Determon
         /// <summary>
         /// Raises a decimal value to an integer power and returns the result.
         /// </summary>
+        /// <remarks>
+        /// This is exactly the same as the version in MathM; it is not an approximation because the algorithm it uses is already very fast.
+        /// It's often called "fast exponentiation..."</remarks>
         /// <param name="value"></param>
         /// <param name="exponent"></param>
         /// <returns></returns>

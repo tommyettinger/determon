@@ -62,6 +62,9 @@ namespace Determon.PerformanceTests
         public decimal SinAM() => ApproxM.Sin(_random.NextDecimal() * MathM.Tau - MathM.Pi);
         [Benchmark]
         public decimal CosAM() => ApproxM.Cos(_random.NextDecimal() * MathM.Tau - MathM.Pi);
+        [Benchmark]
+        public decimal TanAM() => ApproxM.Tan((_random.NextDecimal() - 0.5M) * ApproxM.Pi * 0.999M);
+
     }
     ///<summary>
     ///|         Method |         Mean |      Error |     StdDev |       Median |

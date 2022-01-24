@@ -115,9 +115,12 @@ namespace Determon.UnitTests
             {
                 double d = _random.NextDouble() - 0.5;
                 decimal d1 = (decimal)d;
+                decimal d2 = d1;
                 d = Math.Acos(d);
                 d1 = MathM.Acos(d1);
+                d2 = ApproxM.Acos(d2);
                 Assert.True(Math.Abs((decimal)d - d1) < Epsilon);
+                Assert.True(Math.Abs((decimal)d - d2) < Epsilon);
             }
         }
         [Fact]

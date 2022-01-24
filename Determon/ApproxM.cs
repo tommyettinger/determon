@@ -207,13 +207,16 @@ namespace Determon
         {
             decimal x2 = x * x;
             decimal x3 = x * x2;
+            decimal x4 = x * x3;
+            decimal x5 = x * x4;
+            decimal x6 = x * x5;
             if (x >= decimal.Zero)
             {
-                return Sqrt(decimal.One - x, 0.7M) * (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
+                return Sqrt(decimal.One - x, 0.7M) * (1.5707961728M - 0.2145852647M * x + 0.0887556286M * x2 - 0.0488025043M * x3 + 0.0268999482M * x4 - 0.0111462294M * x5 + 0.0022959648M * x6);
             }
             else
             {
-                return Pi - Sqrt(decimal.One + x, 0.7M) * (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3);
+                return Pi - Sqrt(decimal.One + x, 0.7M) * (1.5707961728M + 0.2145852647M * x + 0.0887556286M * x2 + 0.0488025043M * x3 + 0.0268999482M * x4 + 0.0111462294M * x5 + 0.0022959648M * x6);
             }
         }
 

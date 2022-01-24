@@ -70,6 +70,13 @@ namespace Determon
         /// This is more permissive than the Epsilon in MathM.
         /// </remarks>
         public const decimal Epsilon = 0.0000001M;
+        /// <summary>
+        /// The smallest positive value this permits as tolerance in some equality comparisons that need higher precision.
+        /// </summary>
+        /// <remarks>
+        /// This is more permissive than the Epsilon in MathM, but 1/100 as permissive as Epsilon here.
+        /// </remarks>
+        public const decimal StrictEpsilon = 0.000000001M;
 
         /// <summary>
         /// The smallest negative value this permits as tolerance in equality comparisons.
@@ -288,7 +295,7 @@ namespace Determon
                 cachedResult = result;
                 factorial *= x / iteration++;
                 result += factorial;
-            } while (Math.Abs(cachedResult - result) > Epsilon);
+            } while (Math.Abs(cachedResult - result) > StrictEpsilon);
 
             if (count == 0)
                 return result;

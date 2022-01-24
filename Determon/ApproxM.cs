@@ -69,7 +69,7 @@ namespace Determon
         /// <remarks>
         /// This is more permissive than the Epsilon in MathM.
         /// </remarks>
-        public const decimal Epsilon = 0.0000001M;
+        public const decimal Epsilon = 0.000001M;
         /// <summary>
         /// The smallest positive value this permits as tolerance in some equality comparisons that need higher precision.
         /// </summary>
@@ -189,15 +189,18 @@ namespace Determon
         {
             decimal x2 = x * x;
             decimal x3 = x * x2;
+            decimal x4 = x * x3;
+            decimal x5 = x * x4;
+            decimal x6 = x * x5;
             if (x >= decimal.Zero)
             {
                 return HalfPi - Sqrt(decimal.One - x, 0.7M) *
-                        (1.5707288M - 0.2121144M * x + 0.0742610M * x2 - 0.0187293M * x3);
+                        (1.5707961728M - 0.2145852647M * x + 0.0887556286M * x2 - 0.0488025043M * x3 + 0.0268999482M * x4 - 0.0111462294M * x5 + 0.0022959648M * x6);
             }
             else
             {
                 return Sqrt(decimal.One + x, 0.7M) *
-                    (1.5707288M + 0.2121144M * x + 0.0742610M * x2 + 0.0187293M * x3) - HalfPi;
+                    (1.5707961728M + 0.2145852647M * x + 0.0887556286M * x2 + 0.0488025043M * x3 + 0.0268999482M * x4 + 0.0111462294M * x5 + 0.0022959648M * x6) - HalfPi;
             }
         }
         public static decimal Acos(decimal x)

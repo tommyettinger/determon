@@ -68,9 +68,13 @@ namespace Determon.UnitTests
             {
                 double d = (1.0 - _random.NextDouble()) * 65536.0;
                 decimal d1 = (decimal)d;
+                decimal d2 = d1;
                 d = Math.Log(d);
                 d1 = MathM.Log(d1);
+                d2 = ApproxM.Log(d2);
+                _debug.WriteLine("Difference: " + ((decimal)d - d2));
                 Assert.True(Math.Abs((decimal)d - d1) < Epsilon);
+                Assert.True(Math.Abs((decimal)d - d2) < Epsilon);
             }
         }
 

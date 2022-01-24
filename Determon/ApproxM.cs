@@ -427,7 +427,7 @@ namespace Determon
             var iteration = 0;
             var y = decimal.One;
             var cachedResult = result - decimal.One;
-            while (Math.Abs(cachedResult - result) > Epsilon && iteration < 20)
+            while (Math.Abs(cachedResult - result) > StrictEpsilon && iteration < 30)
             {
                 iteration++;
                 cachedResult = result;

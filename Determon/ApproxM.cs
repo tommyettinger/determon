@@ -437,5 +437,18 @@ namespace Determon
             return count - result;
         }
 
+        /// <summary>
+        /// Analog to Math.Log10().
+        /// </summary>
+        /// <remarks>
+        /// This is exactly the same as the version in MathM, though it calls an approximation to Log() rather than a precise method.
+        /// </remarks>
+        /// <param name="x"></param>
+        /// <returns></returns>
+        public static decimal Log10(decimal x)
+        {
+            return Log(x) * InverseLog10;
+        }
+
     }
 }
